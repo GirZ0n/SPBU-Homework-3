@@ -1,0 +1,15 @@
+5
+0 1 1 1 0
+1 0 1 0 0
+1 1 0 1 1
+1 0 1 0 0
+0 0 1 0 0
+Windows
+MacOS
+Linux
+MacOS
+Windows
+1
+WannaCry
+1
+1
