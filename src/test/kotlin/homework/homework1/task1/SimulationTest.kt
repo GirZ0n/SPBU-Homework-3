@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class SimulationTest {
     @Test
     fun run() {
-        val test = Simulation("123")
+        val test = Simulation()
         test.computers
     }
 }

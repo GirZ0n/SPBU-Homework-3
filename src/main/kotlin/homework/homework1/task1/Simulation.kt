@@ -2,6 +2,7 @@ package homework.homework1.task1
 
 import java.io.File
 import java.io.FileNotFoundException
+import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.NoSuchElementException
 
@@ -49,25 +50,54 @@ class Simulation {
         val network: Array<IntArray>
         val numberOfViruses: Int
         val computerOperatingSystem: Array<OperatingSystem>
+        val virusesNames: Array<String>
+        val infectedComputersByViruses: Array<IntArray>
         try {
             line = scan.nextLine()
             numberOfComputers = line.toInt()
+            if (!isNaturalNumber(numberOfComputers)) {
+                throw IllegalArgumentException("The number must be greater than 0")
+            }
             network = Array(numberOfComputers) { IntArray(numberOfComputers) }
             for (i in 0 until numberOfComputers) {
                 line = scan.nextLine()
                 network[i] = line.split(' ').map { it.toInt() }.toIntArray()
+                for (currentNumber in network[i]) {
+                    if (currentNumber < 0 || currentNumber > 1) {
+                        throw IllegalArgumentException("The number must be either 0 or 1")
+                    }
+                }
             }
-            computerOperatingSystem = Array(numberOfComputers) { "" }
+            computerOperatingSystem = Array(numberOfComputers) { OperatingSystem.WINDOWS }
             for (i in 0 until numberOfComputers) {
                 line = scan.nextLine()
-                when (line.toLowerCase()) {
-                    "windows" -> computerOperatingSystem[i] = OperatingSystem.WINDOWS
-                    "linux" -> computerOperatingSystem
+                computerOperatingSystem[i] = when (line.toLowerCase()) {
+                    "windows" -> OperatingSystem.WINDOWS
+                    "linux" -> OperatingSystem.LINUX
+                    "macos" -> OperatingSystem.MACOS
+                    else -> throw IllegalArgumentException("This OS is not supported")
                 }
             }
             line = scan.nextLine()
             numberOfViruses = line.toInt()
+            if (!isNaturalNumber(numberOfViruses)) {
+                throw IllegalArgumentException("The number must be greater than 0")
+            }
+            virusesNames = Array(numberOfViruses) { "" }
+            for (i in 0 until numberOfViruses) {
+                virusesNames[i] = scan.nextLine()
+            }
 
+            for (i in 0 until numberOfViruses) {
+                line = scan.nextLine()
+                val numberOfInfectedComputers = line.toInt()
+                if (!isNaturalNumber(numberOfInfectedComputers)) {
+                    throw IllegalArgumentException("The number must be greater than 0")
+                }
+                for (j in 0 until numberOfInfectedComputers) {
+
+                }
+            }
         } catch (exception: NumberFormatException) {
             println("Expected number")
             println("Problem line:")
@@ -76,10 +106,16 @@ class Simulation {
             println("No line found")
             println("Last line:")
             println(line)
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+            println("Problem line:")
+            println(line)
         }
 
         return true
     }
+
+    private fun isNaturalNumber(number: Int) = number > 0
 }
 
 fun main() {
