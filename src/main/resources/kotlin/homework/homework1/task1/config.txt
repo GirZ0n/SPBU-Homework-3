@@ -9,7 +9,8 @@ MacOS
 Linux
 MacOS
 Windows
-1
+2
 WannaCry
-1
-1
+1 2
+Petya
+3
