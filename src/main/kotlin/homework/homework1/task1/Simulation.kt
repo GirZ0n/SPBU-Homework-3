@@ -161,12 +161,3 @@ class Simulation {
         }
     }
 }
-/*
-
-fun main() {
-    val test = Simulation()
-    val file = File("./src/main/resources/kotlin/homework/homework1/task1/config.txt")
-    test.import(file)
-    test.run(20, 1000)
-}
-*/
