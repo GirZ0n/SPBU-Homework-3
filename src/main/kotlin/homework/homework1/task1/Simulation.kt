@@ -3,7 +3,7 @@ package homework.homework1.task1
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.IllegalArgumentException
-import java.util.*
+import java.util.Scanner
 import kotlin.NoSuchElementException
 
 class Simulation {
@@ -39,25 +39,19 @@ class Simulation {
     }
 
     fun import(file: File): Boolean {
-        if (!file.exists()) {
-            print("Can't open the file")
-            return false
-        }
-
-        val scan = Scanner(file)
         var line = ""
         val numberOfComputers: Int
         val network: Array<IntArray>
-        val numberOfViruses: Int
         val computerOperatingSystem: Array<OperatingSystem>
+        val numberOfViruses: Int
         val virusesNames: Array<String>
-        val infectedComputersByViruses: Array<IntArray>
+        val infectedComputersByViruses: Array<List<Int>>
         try {
+            val scan = Scanner(file)
+
             line = scan.nextLine()
-            numberOfComputers = line.toInt()
-            if (!isNaturalNumber(numberOfComputers)) {
-                throw IllegalArgumentException("The number must be greater than 0")
-            }
+            numberOfComputers = getNumberOfComputers(line)
+
             network = Array(numberOfComputers) { IntArray(numberOfComputers) }
             for (i in 0 until numberOfComputers) {
                 line = scan.nextLine()
@@ -68,6 +62,7 @@ class Simulation {
                     }
                 }
             }
+
             computerOperatingSystem = Array(numberOfComputers) { OperatingSystem.WINDOWS }
             for (i in 0 until numberOfComputers) {
                 line = scan.nextLine()
@@ -78,25 +73,26 @@ class Simulation {
                     else -> throw IllegalArgumentException("This OS is not supported")
                 }
             }
+
             line = scan.nextLine()
             numberOfViruses = line.toInt()
-            if (!isNaturalNumber(numberOfViruses)) {
-                throw IllegalArgumentException("The number must be greater than 0")
-            }
+            checkNaturalNumber(numberOfViruses)
+
             virusesNames = Array(numberOfViruses) { "" }
+            infectedComputersByViruses = Array(numberOfViruses) { emptyList<Int>() }
             for (i in 0 until numberOfViruses) {
                 virusesNames[i] = scan.nextLine()
-            }
 
-            for (i in 0 until numberOfViruses) {
                 line = scan.nextLine()
-                val numberOfInfectedComputers = line.toInt()
-                if (!isNaturalNumber(numberOfInfectedComputers)) {
-                    throw IllegalArgumentException("The number must be greater than 0")
+                val infectedComputers = line.split(' ').map { it.toInt() }.toList()
+                for (currentNumber in infectedComputers) {
+                    if (currentNumber <= 0 || currentNumber > numberOfComputers) {
+                        throw IllegalArgumentException(
+                            "The number must be greater than 0 and less or equal than $numberOfComputers"
+                        )
+                    }
                 }
-                for (j in 0 until numberOfInfectedComputers) {
-
-                }
+                infectedComputersByViruses[i] = infectedComputers
             }
         } catch (exception: NumberFormatException) {
             println("Expected number")
@@ -110,12 +106,27 @@ class Simulation {
             println(exception.message)
             println("Problem line:")
             println(line)
+        } catch (exception: FileNotFoundException) {
+            println(exception.message)
         }
 
         return true
     }
 
-    private fun isNaturalNumber(number: Int) = number > 0
+    private fun checkNaturalNumber(number: Int) {
+        if (number <= 0) {
+            throw IllegalArgumentException("The number must be greater than 0")
+        }
+    }
+
+    private fun getNumberOfComputers(scan: Scanner): Int {
+        val line = scan.nextLine()
+        val numberOfComputers = line.toInt()
+        checkNaturalNumber(numberOfComputers)
+        return numberOfComputers
+    }
+
+    private fun getNetwork()
 }
 
 fun main() {
