@@ -11,6 +11,6 @@ MacOS
 Windows
 2
 WannaCry
-1 2
 Petya
+1 2
 3
