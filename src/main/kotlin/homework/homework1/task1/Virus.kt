@@ -15,10 +15,5 @@ class Virus(val name: String) {
         infectedComputers += newInfectedComputers
     }
 
-    private fun tryToInfect(computer: Computer): Boolean {
-        if (!computer.isInfectedBy(name) && computer.installVirus(name)) {
-            return true
-        }
-        return false
-    }
+    private fun tryToInfect(computer: Computer) = !computer.isInfectedBy(name) && computer.installVirus(name)
 }
