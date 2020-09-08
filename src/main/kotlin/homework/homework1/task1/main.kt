@@ -13,6 +13,7 @@ fun main() {
     readLine()
     val networkSimulation = Simulation()
     if (!networkSimulation.import(file)) {
+        println("Произошла ошибка импортирования!")
         return
     }
     println("Конфигурационный файл успешно импортирован!")
