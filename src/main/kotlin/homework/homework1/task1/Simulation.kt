@@ -20,22 +20,16 @@ class Simulation {
     }
 
     fun import(file: File): Boolean {
-        val numberOfComputers: Int
-        val network: Array<IntArray>
-        val computersOperatingSystem: Array<OperatingSystem>
-        val numberOfViruses: Int
-        val virusesNames: Array<String>
-        val infectedComputersByViruses: Array<List<Int>>
-        var isCatchProblem = false
+        var isCaughtProblem = false
         try {
             // File parsing
             val scan = Scanner(file)
-            numberOfComputers = getNumberOfComputers(scan)
-            network = getNetwork(scan, numberOfComputers)
-            computersOperatingSystem = getComputersOperatingSystem(scan, numberOfComputers)
-            numberOfViruses = getNumberOfViruses(scan)
-            virusesNames = getVirusesNames(scan, numberOfViruses)
-            infectedComputersByViruses = getInfectedComputersByViruses(scan, numberOfViruses, numberOfComputers)
+            val numberOfComputers = getNumberOfComputers(scan)
+            val network = getNetwork(scan, numberOfComputers)
+            val computersOperatingSystem = getComputersOperatingSystem(scan, numberOfComputers)
+            val numberOfViruses = getNumberOfViruses(scan)
+            val virusesNames = getVirusesNames(scan, numberOfViruses)
+            val infectedComputersByViruses = getInfectedComputersByViruses(scan, numberOfViruses, numberOfComputers)
 
             // Simulation initialization
             for (i in 1..numberOfComputers) {
@@ -47,23 +41,23 @@ class Simulation {
             }
 
             connectComputers(numberOfComputers, network)
-            infectStarterComputers(numberOfViruses, infectedComputersByViruses)
+            infectInitialComputers(numberOfViruses, infectedComputersByViruses)
         } catch (exception: NumberFormatException) {
             println("Expected number")
             println(exception.message)
-            isCatchProblem = true
+            isCaughtProblem = true
         } catch (exception: NoSuchElementException) {
             println("No line found")
-            isCatchProblem = true
+            isCaughtProblem = true
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
-            isCatchProblem = true
+            isCaughtProblem = true
         } catch (exception: FileNotFoundException) {
             println(exception.message)
-            isCatchProblem = true
+            isCaughtProblem = true
         }
 
-        return !isCatchProblem
+        return !isCaughtProblem
     }
 
     private fun getNumberOfComputers(scan: Scanner): Int {
@@ -152,7 +146,7 @@ class Simulation {
         }
     }
 
-    private fun infectStarterComputers(numberOfViruses: Int, infectedComputersByViruses: Array<List<Int>>) {
+    private fun infectInitialComputers(numberOfViruses: Int, infectedComputersByViruses: Array<List<Int>>) {
         for (indexOfVirus in 0 until numberOfViruses) {
             for (indexOfComputer in infectedComputersByViruses[indexOfVirus]) {
                 viruses[indexOfVirus].infectedComputers += computers[indexOfComputer - 1]
