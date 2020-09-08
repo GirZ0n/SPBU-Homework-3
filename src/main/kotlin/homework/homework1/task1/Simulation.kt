@@ -56,7 +56,6 @@ class Simulation {
             println(exception.message)
             isCaughtProblem = true
         }
-
         return !isCaughtProblem
     }
 
