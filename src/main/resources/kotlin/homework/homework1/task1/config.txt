@@ -9,6 +9,11 @@ MacOS
 Linux
 MacOS
 Windows
+1
+0.5
+0.1
+0.6
+1
 2
 WannaCry
 Petya

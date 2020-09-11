@@ -83,17 +83,19 @@ class Simulation {
     }
 
     private fun getComputersOperatingSystem(scan: Scanner, numberOfComputers: Int): Array<OperatingSystem> {
-        val computersOperatingSystem = Array(numberOfComputers) { OperatingSystem.WINDOWS }
+        val computersOSNames = Array(numberOfComputers) { "" }
         for (i in 0 until numberOfComputers) {
-            val line = scan.nextLine()
-            computersOperatingSystem[i] = when (line.toLowerCase()) {
-                "windows" -> OperatingSystem.WINDOWS
-                "linux" -> OperatingSystem.LINUX
-                "macos" -> OperatingSystem.MACOS
-                else -> throw IllegalArgumentException("This OS is not supported. \nProblem line: $line")
-            }
+            computersOSNames[i] = scan.nextLine()
         }
-        return computersOperatingSystem
+        val computersOSProbabilityOfInfection = Array(numberOfComputers) { 0.0 }
+        for (i in 0 until numberOfComputers) {
+            computersOSProbabilityOfInfection[i] = scan.nextLine().toDouble()
+        }
+        val computersOS = Array(numberOfComputers) { OperatingSystem("", 0.0) }
+        for (i in 0 until numberOfComputers) {
+            computersOS[i] = OperatingSystem(computersOSNames[i], computersOSProbabilityOfInfection[i])
+        }
+        return computersOS
     }
 
     private fun getNumberOfViruses(scan: Scanner): Int {
