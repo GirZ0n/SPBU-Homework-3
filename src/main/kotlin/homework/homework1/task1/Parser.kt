@@ -85,5 +85,4 @@ class Parser(file: File) {
         }
         return infectedComputersByViruses
     }
-
 }

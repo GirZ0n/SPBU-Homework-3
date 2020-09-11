@@ -3,7 +3,6 @@ package homework.homework1.task1
 import java.io.File
 import java.io.FileNotFoundException
 import java.lang.IllegalArgumentException
-import java.util.Scanner
 import kotlin.NoSuchElementException
 
 class Simulation {
