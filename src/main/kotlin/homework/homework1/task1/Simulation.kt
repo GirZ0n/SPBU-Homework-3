@@ -23,13 +23,13 @@ class Simulation {
         var isCaughtProblem = false
         try {
             // File parsing
-            val scan = Scanner(file)
-            val numberOfComputers = getNumberOfComputers(scan)
-            val network = getNetwork(scan, numberOfComputers)
-            val computersOperatingSystem = getComputersOperatingSystem(scan, numberOfComputers)
-            val numberOfViruses = getNumberOfViruses(scan)
-            val virusesNames = getVirusesNames(scan, numberOfViruses)
-            val infectedComputersByViruses = getInfectedComputersByViruses(scan, numberOfViruses, numberOfComputers)
+            val parser = Parser(file)
+            val numberOfComputers = parser.getNumberOfComputers()
+            val network = parser.getNetwork(numberOfComputers)
+            val computersOperatingSystem = parser.getComputersOperatingSystem(numberOfComputers)
+            val numberOfViruses = parser.getNumberOfViruses()
+            val virusesNames = parser.getVirusesNames(numberOfViruses)
+            val infectedComputersByViruses = parser.getInfectedComputersByViruses(numberOfViruses, numberOfComputers)
 
             // Simulation initialization
             for (i in 1..numberOfComputers) {
@@ -57,84 +57,6 @@ class Simulation {
             isCaughtProblem = true
         }
         return !isCaughtProblem
-    }
-
-    private fun getNumberOfComputers(scan: Scanner): Int {
-        val line = scan.nextLine()
-        val numberOfComputers = line.toInt()
-        if (numberOfComputers <= 0) {
-            throw IllegalArgumentException("The number must be greater than 0. \nProblem line: $line")
-        }
-        return numberOfComputers
-    }
-
-    private fun getNetwork(scan: Scanner, numberOfComputers: Int): Array<IntArray> {
-        val network = Array(numberOfComputers) { IntArray(numberOfComputers) }
-        for (i in 0 until numberOfComputers) {
-            val line = scan.nextLine()
-            network[i] = line.split(' ').map { it.toInt() }.toIntArray()
-            for (currentNumber in network[i]) {
-                if (currentNumber < 0 || currentNumber > 1) {
-                    throw IllegalArgumentException("The number must be either 0 or 1. \nProblem line: $line")
-                }
-            }
-        }
-        return network
-    }
-
-    private fun getComputersOperatingSystem(scan: Scanner, numberOfComputers: Int): Array<OperatingSystem> {
-        val computersOSNames = Array(numberOfComputers) { "" }
-        for (i in 0 until numberOfComputers) {
-            computersOSNames[i] = scan.nextLine()
-        }
-        val computersOSProbabilityOfInfection = Array(numberOfComputers) { 0.0 }
-        for (i in 0 until numberOfComputers) {
-            computersOSProbabilityOfInfection[i] = scan.nextLine().toDouble()
-        }
-        val computersOS = Array(numberOfComputers) { OperatingSystem("", 0.0) }
-        for (i in 0 until numberOfComputers) {
-            computersOS[i] = OperatingSystem(computersOSNames[i], computersOSProbabilityOfInfection[i])
-        }
-        return computersOS
-    }
-
-    private fun getNumberOfViruses(scan: Scanner): Int {
-        val line = scan.nextLine()
-        val numberOfViruses = line.toInt()
-        if (numberOfViruses <= 0) {
-            throw IllegalArgumentException("The number must be greater than 0. \nProblem line: $line")
-        }
-        return numberOfViruses
-    }
-
-    private fun getVirusesNames(scan: Scanner, numberOfViruses: Int): Array<String> {
-        val virusesNames = Array(numberOfViruses) { "" }
-        for (i in 0 until numberOfViruses) {
-            virusesNames[i] = scan.nextLine()
-        }
-        return virusesNames
-    }
-
-    private fun getInfectedComputersByViruses(
-        scan: Scanner,
-        numberOfViruses: Int,
-        numberOfComputers: Int
-    ): Array<List<Int>> {
-        val infectedComputersByViruses = Array(numberOfViruses) { emptyList<Int>() }
-        for (i in 0 until numberOfViruses) {
-            val line = scan.nextLine()
-            val infectedComputers = line.split(' ').map { it.toInt() }.toList()
-            for (currentNumber in infectedComputers) {
-                if (currentNumber <= 0 || currentNumber > numberOfComputers) {
-                    throw IllegalArgumentException(
-                        "The number must be greater than 0 and less or equal than $numberOfComputers. " +
-                                "\nProblem line: $line"
-                    )
-                }
-            }
-            infectedComputersByViruses[i] = infectedComputers
-        }
-        return infectedComputersByViruses
     }
 
     private fun connectComputers(numberOfComputers: Int, network: Array<IntArray>) {
