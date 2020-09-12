@@ -67,7 +67,12 @@ class Simulation {
         }
     }
 
-    private fun addComputers(numberOfComputers: Int, numberOfViruses: Int, infectedComputersByViruses: Array<List<Int>>, computersOperatingSystem: Array<OperatingSystem>) {
+    private fun addComputers(
+            numberOfComputers: Int,
+            numberOfViruses: Int,
+            infectedComputersByViruses: Array<List<Int>>,
+            computersOperatingSystem: Array<OperatingSystem>
+    ) {
         for (indexOfComputer in 1..numberOfComputers) {
             val listOfViruses = mutableListOf<Virus>()
             for (indexOfVirus in 1..numberOfViruses) {
