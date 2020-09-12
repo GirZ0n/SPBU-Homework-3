@@ -56,7 +56,7 @@ class Simulation {
         for (virus in viruses) {
             val infectedComputers = computers.filter { computer -> computer.isInfectedBy(virus) }
             for (infectedComputer in infectedComputers) {
-                network[infectedComputer]?.forEach { it.installVirus(virus) }
+                network[infectedComputer]?.forEach { computer -> computer.installVirus(virus) }
             }
         }
     }
