@@ -7,10 +7,10 @@ Windows
 Windows
 Linux
 MacOS
-0.8
-0.8
-0.2
-0.5
+1
+1
+1
+1
 1
 WannaCry
 1
