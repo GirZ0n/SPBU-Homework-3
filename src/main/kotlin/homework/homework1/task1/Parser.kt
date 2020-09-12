@@ -16,7 +16,7 @@ class Parser(file: File) {
         return numberOfComputers
     }
 
-    fun getNetwork(numberOfComputers: Int): Array<IntArray> {
+    fun getMatrix(numberOfComputers: Int): Array<IntArray> {
         val network = Array(numberOfComputers) { IntArray(numberOfComputers) }
         for (i in 0 until numberOfComputers) {
             val line = scan.nextLine()
