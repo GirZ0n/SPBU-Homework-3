@@ -6,14 +6,15 @@ import java.lang.IllegalArgumentException
 import kotlin.NoSuchElementException
 
 class Simulation {
-    val computers = emptyList<Computer>().toMutableList()
-    val viruses = emptyList<Virus>().toMutableList()
+    private val computers = mutableListOf<Computer>()
+    private val viruses = mutableListOf<Virus>()
+    private val network = mutableMapOf<Computer, List<Computer>>()
 
     fun run(numberOfMoves: Int, moveFrequency: Long) {
         for (i in 1..numberOfMoves) {
-            viruses.forEach { it.spread() }
-            println("Move №$i:")
-            computers.forEach { it.printStatistics() }
+            spreadViruses()
+            println("Move $i:")
+            computers.forEach { println(it) }
             Thread.sleep(moveFrequency)
         }
     }
@@ -24,23 +25,39 @@ class Simulation {
             // File parsing
             val parser = Parser(file)
             val numberOfComputers = parser.getNumberOfComputers()
-            val network = parser.getNetwork(numberOfComputers)
+            val matrix = parser.getMatrix(numberOfComputers)
             val computersOperatingSystem = parser.getComputersOperatingSystem(numberOfComputers)
             val numberOfViruses = parser.getNumberOfViruses()
             val virusesNames = parser.getVirusesNames(numberOfViruses)
             val infectedComputersByViruses = parser.getInfectedComputersByViruses(numberOfViruses, numberOfComputers)
 
             // Simulation initialization
-            for (i in 1..numberOfComputers) {
-                computers += Computer(i, computersOperatingSystem[i - 1])
-            }
-
             for (i in 1..numberOfViruses) {
                 viruses += Virus(virusesNames[i - 1])
             }
 
-            connectComputers(numberOfComputers, network)
-            infectInitialComputers(numberOfViruses, infectedComputersByViruses)
+            for (indexOfComputer in 1..numberOfComputers) {
+                val listOfViruses = mutableListOf<Virus>()
+                for (indexOfVirus in 1..numberOfViruses) {
+                    if (infectedComputersByViruses[indexOfVirus - 1].contains(indexOfComputer)) {
+                        listOfViruses.add(viruses[indexOfVirus - 1])
+                    }
+                }
+                computers += Computer(
+                        "Device №$indexOfComputer",
+                        computersOperatingSystem[indexOfComputer - 1],
+                        listOfViruses)
+            }
+
+            for (i in 0 until numberOfComputers) {
+                val connectedComputers = mutableListOf<Computer>()
+                for (j in 0 until numberOfComputers) {
+                    if (matrix[i][j] == 1) {
+                        connectedComputers += computers[j]
+                    }
+                }
+                network[computers[i]] = connectedComputers
+            }
         } catch (exception: NumberFormatException) {
             println("Expected number")
             println(exception.message)
@@ -58,21 +75,11 @@ class Simulation {
         return !isCaughtProblem
     }
 
-    private fun connectComputers(numberOfComputers: Int, network: Array<IntArray>) {
-        for (i in 0 until numberOfComputers) {
-            for (j in 0 until numberOfComputers) {
-                if (network[i][j] == 1) {
-                    computers[i].connectedComputers += computers[j]
-                }
-            }
-        }
-    }
-
-    private fun infectInitialComputers(numberOfViruses: Int, infectedComputersByViruses: Array<List<Int>>) {
-        for (indexOfVirus in 0 until numberOfViruses) {
-            for (indexOfComputer in infectedComputersByViruses[indexOfVirus]) {
-                viruses[indexOfVirus].infectedComputers += computers[indexOfComputer - 1]
-                computers[indexOfComputer - 1].viruses += viruses[indexOfVirus].name
+    private fun spreadViruses() {
+        for (virus in viruses) {
+            val infectedComputers = computers.filter { computer -> computer.isInfectedBy(virus) }
+            for (infectedComputer in infectedComputers) {
+                network[infectedComputer]?.forEach { it.installVirus(virus) }
             }
         }
     }
