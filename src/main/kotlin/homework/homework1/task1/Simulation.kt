@@ -32,32 +32,9 @@ class Simulation {
             val infectedComputersByViruses = parser.getInfectedComputersByViruses(numberOfViruses, numberOfComputers)
 
             // Simulation initialization
-            for (i in 1..numberOfViruses) {
-                viruses += Virus(virusesNames[i - 1])
-            }
-
-            for (indexOfComputer in 1..numberOfComputers) {
-                val listOfViruses = mutableListOf<Virus>()
-                for (indexOfVirus in 1..numberOfViruses) {
-                    if (infectedComputersByViruses[indexOfVirus - 1].contains(indexOfComputer)) {
-                        listOfViruses.add(viruses[indexOfVirus - 1])
-                    }
-                }
-                computers += Computer(
-                        "Device №$indexOfComputer",
-                        computersOperatingSystem[indexOfComputer - 1],
-                        listOfViruses)
-            }
-
-            for (i in 0 until numberOfComputers) {
-                val connectedComputers = mutableListOf<Computer>()
-                for (j in 0 until numberOfComputers) {
-                    if (matrix[i][j] == 1) {
-                        connectedComputers += computers[j]
-                    }
-                }
-                network[computers[i]] = connectedComputers
-            }
+            addViruses(numberOfViruses, virusesNames)
+            addComputers(numberOfComputers, numberOfViruses, infectedComputersByViruses, computersOperatingSystem)
+            createNetwork(numberOfComputers, matrix)
         } catch (exception: NumberFormatException) {
             println("Expected number")
             println(exception.message)
@@ -81,6 +58,39 @@ class Simulation {
             for (infectedComputer in infectedComputers) {
                 network[infectedComputer]?.forEach { it.installVirus(virus) }
             }
+        }
+    }
+
+    private fun addViruses(numberOfViruses: Int, virusesNames: Array<String>) {
+        for (i in 1..numberOfViruses) {
+            viruses += Virus(virusesNames[i - 1])
+        }
+    }
+
+    private fun addComputers(numberOfComputers: Int, numberOfViruses: Int, infectedComputersByViruses: Array<List<Int>>, computersOperatingSystem: Array<OperatingSystem>) {
+        for (indexOfComputer in 1..numberOfComputers) {
+            val listOfViruses = mutableListOf<Virus>()
+            for (indexOfVirus in 1..numberOfViruses) {
+                if (infectedComputersByViruses[indexOfVirus - 1].contains(indexOfComputer)) {
+                    listOfViruses.add(viruses[indexOfVirus - 1])
+                }
+            }
+            computers += Computer(
+                    "Device №$indexOfComputer",
+                    computersOperatingSystem[indexOfComputer - 1],
+                    listOfViruses)
+        }
+    }
+
+    private fun createNetwork(numberOfComputers: Int, matrix: Array<IntArray>) {
+        for (i in 0 until numberOfComputers) {
+            val connectedComputers = mutableListOf<Computer>()
+            for (j in 0 until numberOfComputers) {
+                if (matrix[i][j] == 1) {
+                    connectedComputers += computers[j]
+                }
+            }
+            network[computers[i]] = connectedComputers
         }
     }
 }
