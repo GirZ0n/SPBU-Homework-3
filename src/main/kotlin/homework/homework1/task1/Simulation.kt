@@ -2,6 +2,7 @@ package homework.homework1.task1
 
 import java.io.File
 import java.io.FileNotFoundException
+import java.lang.Exception
 import java.lang.IllegalArgumentException
 import kotlin.NoSuchElementException
 
@@ -19,8 +20,7 @@ class Simulation {
         }
     }
 
-    fun import(file: File): Boolean {
-        var isCaughtProblem = false
+    fun import(file: File) {
         try {
             // File parsing
             val parser = Parser(file)
@@ -36,20 +36,14 @@ class Simulation {
             addComputers(numberOfComputers, numberOfViruses, infectedComputersByViruses, computersOperatingSystem)
             createNetwork(numberOfComputers, matrix)
         } catch (exception: NumberFormatException) {
-            println("Expected number")
-            println(exception.message)
-            isCaughtProblem = true
+            exceptionHandling(exception)
         } catch (exception: NoSuchElementException) {
-            println("No line found")
-            isCaughtProblem = true
+            exceptionHandling(exception)
         } catch (exception: IllegalArgumentException) {
-            println(exception.message)
-            isCaughtProblem = true
+            exceptionHandling(exception)
         } catch (exception: FileNotFoundException) {
-            println(exception.message)
-            isCaughtProblem = true
+            exceptionHandling(exception)
         }
-        return !isCaughtProblem
     }
 
     private fun spreadViruses() {
@@ -95,5 +89,10 @@ class Simulation {
             }
             network[computers[i]] = connectedComputers
         }
+    }
+
+    private fun exceptionHandling(exception: Exception) {
+        println(exception.message)
+        throw(ImportErrorException("An error occurred during import"))
     }
 }

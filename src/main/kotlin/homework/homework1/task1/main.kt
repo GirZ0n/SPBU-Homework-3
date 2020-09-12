@@ -12,8 +12,10 @@ fun main() {
     println("Когда будете готовы, нажмите 'enter'")
     readLine()
     val networkSimulation = Simulation()
-    if (!networkSimulation.import(file)) {
-        println("Произошла ошибка импортирования!")
+    try {
+        networkSimulation.import(file)
+    } catch (exception: ImportErrorException) {
+        println(exception.message)
         return
     }
     println("Конфигурационный файл успешно импортирован!")
