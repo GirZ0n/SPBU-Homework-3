@@ -33,8 +33,7 @@ class Simulation {
 
             // Simulation initialization
             addViruses(numberOfViruses, virusesNames)
-            addComputers(numberOfComputers, computersOperatingSystem)
-            infectInitComputers(numberOfComputers, numberOfViruses, infectedComputersByViruses)
+            addComputers(numberOfComputers, numberOfViruses, infectedComputersByViruses, computersOperatingSystem)
             createNetwork(numberOfComputers, matrix)
         } catch (exception: NumberFormatException) {
             println("Expected number")
@@ -68,16 +67,11 @@ class Simulation {
         }
     }
 
-    private fun addComputers(numberOfComputers: Int, computersOperatingSystem: Array<OperatingSystem>) {
-        for (indexOfComputer in 1..numberOfComputers) {
-            computers += Computer("Device №$indexOfComputer", computersOperatingSystem[indexOfComputer - 1])
-        }
-    }
-
-    private fun infectInitComputers(
+    private fun addComputers(
         numberOfComputers: Int,
         numberOfViruses: Int,
-        infectedComputersByViruses: Array<List<Int>>
+        infectedComputersByViruses: Array<List<Int>>,
+        computersOperatingSystem: Array<OperatingSystem>
     ) {
         for (indexOfComputer in 1..numberOfComputers) {
             val listOfViruses = mutableListOf<Virus>()
@@ -86,6 +80,8 @@ class Simulation {
                     listOfViruses.add(viruses[indexOfVirus - 1])
                 }
             }
+            computers +=
+                    Computer("Device №$indexOfComputer", computersOperatingSystem[indexOfComputer - 1], listOfViruses)
         }
     }
 
