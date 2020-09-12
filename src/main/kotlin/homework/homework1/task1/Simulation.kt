@@ -6,8 +6,8 @@ import java.lang.IllegalArgumentException
 import kotlin.NoSuchElementException
 
 class Simulation {
-    private val computers = mutableListOf<Computer>()
-    private val viruses = mutableListOf<Virus>()
+    val computers = mutableListOf<Computer>()
+    val viruses = mutableListOf<Virus>()
     private val network = mutableMapOf<Computer, List<Computer>>()
 
     fun run(numberOfMoves: Int, moveFrequency: Long) {
