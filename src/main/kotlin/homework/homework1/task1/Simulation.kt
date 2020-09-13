@@ -92,7 +92,6 @@ class Simulation {
     }
 
     private fun exceptionHandling(exception: Exception) {
-        println(exception.message)
-        throw(ImportErrorException("An error occurred during import"))
+        throw(ImportErrorException("An error occurred during import", exception))
     }
 }

@@ -16,6 +16,7 @@ fun main() {
         networkSimulation.import(file)
     } catch (exception: ImportErrorException) {
         println(exception.message)
+        print(exception.innerException.message)
         return
     }
     println("Конфигурационный файл успешно импортирован!")
