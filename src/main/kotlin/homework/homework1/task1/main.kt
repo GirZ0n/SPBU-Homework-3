@@ -14,9 +14,9 @@ fun main() {
     val networkSimulation = Simulation()
     try {
         networkSimulation.import(file)
-    } catch (exception: ImportErrorException) {
-        println(exception.message)
-        print(exception.innerException.message)
+    } catch (error: ImportError) {
+        println(error.message)
+        print(error.innerException.message)
         return
     }
     println("Конфигурационный файл успешно импортирован!")
