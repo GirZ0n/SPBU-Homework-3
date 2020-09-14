@@ -8,7 +8,6 @@ class CustomProbabilityGenerator(private val arrayOfProbabilities: DoubleArray) 
     override fun getProbability(): Double {
         return if (index in arrayOfProbabilities.indices) {
             require(arrayOfProbabilities[index] in 0.0..1.0)
-            println(index)
             arrayOfProbabilities[index++]
         } else {
             Random.nextDouble()
