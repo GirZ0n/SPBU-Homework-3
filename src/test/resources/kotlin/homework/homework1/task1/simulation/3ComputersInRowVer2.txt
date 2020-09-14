@@ -5,9 +5,9 @@
 Windows
 MacOS
 Linux
-1
-1
-1
+0.8
+0.5
+0.2
 1
 WannaCry
-2
+1
