@@ -79,6 +79,34 @@ internal class SimulationTest {
 
     /*
     Граф:
+    1---2---3
+    Заражён: 1
+    Вероятность заражения устройства 1: 0.8
+    Вероятность заражения устройства 2: 0.5
+    Вероятность заражения устройства 3: 0.2
+    */
+    @Test
+    fun run_3ComputersInRowVer3_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/3ComputersInRowVer3.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройство №3 не заражено
+        isInfected = simulation.computers[2].isInfectedBy(virus)
+        isProblem = !isProblem && isInfected
+
+        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
         4
         |
     1---2---3
@@ -154,6 +182,39 @@ internal class SimulationTest {
             isProblem = !isProblem && !isInfected
         }
 
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
+        4
+        |
+    1---2---3
+    Заражён: 1
+    Вероятность заражения устройства 1: 0.8
+    Вероятность заражения устройства 2: 0.8
+    Вероятность заражения устройства 3: 0.5
+    Вероятность заражения устройства 4: 0.2
+    */
+    @Test
+    fun run_4ComputersVer3_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/4ComputersVer3.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №3 и №4 не заражены
+        for (i in 3..4) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
+        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
         assertFalse(isProblem)
     }
 
@@ -246,14 +307,50 @@ internal class SimulationTest {
 
     /*
     Граф:
+        3
+        |
+    1---2---4
+        |
+        5
+    Заражён: 1
+    Вероятность заражения устройства 1: 0.8
+    Вероятность заражения устройства 2: 0.8
+    Вероятность заражения устройства 3: 0.2
+    Вероятность заражения устройства 4: 0.5
+    Вероятность заражения устройства 5: 0.2
+    */
+    @Test
+    fun run_5ComputersVer3_OneMove_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersVer3.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №3, №4 и №5 не заражены
+        for (i in 3..5) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
+        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
     1---2---3---4---5
     Заражён: 1
     Вероятность заражение везде равна 100%
     */
     @Test
-    fun run_5ComputersInRow__mustWork() {
+    fun run_5ComputersInRowVer1_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersInRow.txt"))
+        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersInRowVer1.txt"))
         simulation.run(4, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -264,6 +361,38 @@ internal class SimulationTest {
             isProblem = !isProblem && !isInfected
         }
 
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
+    1---2---3---4---5
+    Заражён: 1
+    Вероятность заражения устройства 1: 0.8
+    Вероятность заражения устройства 2: 0.8
+    Вероятность заражения устройства 3: 0.5
+    Вероятность заражения устройства 4: 0.2
+    Вероятность заражения устройства 5: 0.2
+    */
+    @Test
+    fun run_5ComputersInRowVer2_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersInRowVer2.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №3, №4 и №5 не заражены
+        for (i in 3..5) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
+        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
         assertFalse(isProblem)
     }
 }
