@@ -109,6 +109,35 @@ internal class SimulationTest {
 
     /*
     Граф:
+    1---2---3
+    Заражён: 1
+    Вероятность заражения устройства 1: 0
+    Вероятность заражения устройства 2: 0
+    Вероятность заражения устройства 3: 0
+    */
+    @Test
+    fun run_3ComputersInRowVer4_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("$path/3ComputersInRowVer4.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройство №3 не заражено
+        for (i in 2..3) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
         4
         |
     1---2---3
@@ -222,6 +251,38 @@ internal class SimulationTest {
 
     /*
     Граф:
+        4
+        |
+    1---2---3
+    Заражён: 1
+    Вероятность заражения устройства 1: 0
+    Вероятность заражения устройства 2: 0
+    Вероятность заражения устройства 3: 0
+    Вероятность заражения устройства 4: 0
+    */
+    @Test
+    fun run_4ComputersVer4_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("$path/4ComputersVer4.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №2, №3 и №4 не заражены
+        for (i in 2..4) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
         3
         |
     1---2---4
@@ -322,7 +383,7 @@ internal class SimulationTest {
     Вероятность заражения устройства 5: 0.2
     */
     @Test
-    fun run_5ComputersVer3_OneMove_mustWork() {
+    fun run_5ComputersVer3_mustWork() {
         val simulation = Simulation()
         simulation.import(File("$path/5ComputersVer3.txt"))
         simulation.run(1, 0)
@@ -340,6 +401,41 @@ internal class SimulationTest {
         }
 
         // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
+        3
+        |
+    1---2---4
+        |
+        5
+    Заражён: 1
+    Вероятность заражения устройства 1: 0
+    Вероятность заражения устройства 2: 0
+    Вероятность заражения устройства 3: 0
+    Вероятность заражения устройства 4: 0
+    Вероятность заражения устройства 5: 0
+    */
+    @Test
+    fun run_5ComputersVer4_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("$path/5ComputersVer4.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №2, №3, №4 и №5 не заражены
+        for (i in 2..5) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
         assertFalse(isProblem)
     }
 
@@ -395,6 +491,37 @@ internal class SimulationTest {
         }
 
         // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    /*
+    Граф:
+    1---2---3---4---5
+    Заражён: 1
+    Вероятность заражения устройства 1: 0
+    Вероятность заражения устройства 2: 0
+    Вероятность заражения устройства 3: 0
+    Вероятность заражения устройства 4: 0
+    Вероятность заражения устройства 5: 0
+    */
+    @Test
+    fun run_5ComputersInRowVer3_mustWork() {
+        val simulation = Simulation()
+        simulation.import(File("$path/5ComputersInRowVer3.txt"))
+        simulation.run(1, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 заражено
+        var isInfected = simulation.computers[0].isInfectedBy(virus)
+        isProblem = !isProblem && !isInfected
+
+        // Проверяем, что устройства №2, №3, №4 и №5 не заражены
+        for (i in 3..5) {
+            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && isInfected
+        }
+
         assertFalse(isProblem)
     }
 }
