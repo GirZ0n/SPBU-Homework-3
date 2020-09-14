@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 internal class SimulationTest {
+    private val path = "./src/test/resources/kotlin/homework/homework1/task1/simulation"
+
     /*
     Граф:
     1---2---3
@@ -14,7 +16,7 @@ internal class SimulationTest {
     @Test
     fun run_3ComputersInRowVer1_OneMove_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/3ComputersInRowVer1.txt"))
+        simulation.import(File("$path/3ComputersInRowVer1.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -40,7 +42,7 @@ internal class SimulationTest {
     @Test
     fun run_3ComputersInRowVer1_TwoMoves_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/3ComputersInRowVer1.txt"))
+        simulation.import(File("$path/3ComputersInRowVer1.txt"))
         simulation.run(2, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -63,7 +65,7 @@ internal class SimulationTest {
     @Test
     fun run_3ComputersInRowVer2_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/3ComputersInRowVer2.txt"))
+        simulation.import(File("$path/3ComputersInRowVer2.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -88,7 +90,7 @@ internal class SimulationTest {
     @Test
     fun run_3ComputersInRowVer3_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/3ComputersInRowVer3.txt"))
+        simulation.import(File("$path/3ComputersInRowVer3.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -116,7 +118,7 @@ internal class SimulationTest {
     @Test
     fun run_4ComputersVer1_OneMove_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/4ComputersVer1.txt"))
+        simulation.import(File("$path/4ComputersVer1.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -146,7 +148,7 @@ internal class SimulationTest {
     @Test
     fun run_4ComputersVer1_TwoMoves_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/4ComputersVer1.txt"))
+        simulation.import(File("$path/4ComputersVer1.txt"))
         simulation.run(2, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -171,7 +173,7 @@ internal class SimulationTest {
     @Test
     fun run_4ComputersVer2_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/4ComputersVer2.txt"))
+        simulation.import(File("$path/4ComputersVer2.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -199,7 +201,7 @@ internal class SimulationTest {
     @Test
     fun run_4ComputersVer3_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/4ComputersVer3.txt"))
+        simulation.import(File("$path/4ComputersVer3.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -231,7 +233,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersVer1_OneMove_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersVer1.txt"))
+        simulation.import(File("$path/5ComputersVer1.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -264,7 +266,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersVer1_TwoMoves_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersVer1.txt"))
+        simulation.import(File("$path/5ComputersVer1.txt"))
         simulation.run(2, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -291,7 +293,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersVer2_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersVer2.txt"))
+        simulation.import(File("$path/5ComputersVer2.txt"))
         simulation.run(2, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -322,7 +324,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersVer3_OneMove_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersVer3.txt"))
+        simulation.import(File("$path/5ComputersVer3.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -350,7 +352,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersInRowVer1_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersInRowVer1.txt"))
+        simulation.import(File("$path/5ComputersInRowVer1.txt"))
         simulation.run(4, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
@@ -377,7 +379,7 @@ internal class SimulationTest {
     @Test
     fun run_5ComputersInRowVer2_mustWork() {
         val simulation = Simulation()
-        simulation.import(File("./src/test/resources/kotlin/homework/homework1/task1/5ComputersInRowVer2.txt"))
+        simulation.import(File("$path/5ComputersInRowVer2.txt"))
         simulation.run(1, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
