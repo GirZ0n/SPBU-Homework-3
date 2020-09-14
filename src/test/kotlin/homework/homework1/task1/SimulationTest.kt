@@ -88,22 +88,62 @@ internal class SimulationTest {
     Вероятность заражения устройства 3: 0.2
     */
     @Test
-    fun run_3ComputersInRowVer3_mustWork() {
-        val simulation = Simulation()
+    fun run_3ComputersInRowVer3_run1_mustWork() {
+        // Число 0.3 подобрано таким образом, чтобы устройство 2 обязательно заразилось, а компьютер 3 -- нет
+        // 298 - именно столько чисел потребуется для симуляции 100 шагов
+        val simulation = Simulation(CustomProbabilityGenerator(DoubleArray(298) { 0.3 }))
         simulation.import(File("$path/3ComputersInRowVer3.txt"))
-        simulation.run(1, 0)
+        simulation.run(100, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
 
-        // Проверяем, что устройство №1 заражено
-        var isInfected = simulation.computers[0].isInfectedBy(virus)
-        isProblem = !isProblem && !isInfected
+        // Проверяем, что устройства №1 и №2 заражены
+        for (i in 1..2) {
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && !isInfected
+        }
 
         // Проверяем, что устройство №3 не заражено
-        isInfected = simulation.computers[2].isInfectedBy(virus)
+        val isInfected = simulation.computers[2].isInfectedBy(virus)
         isProblem = !isProblem && isInfected
 
-        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    @Test
+    fun run_3ComputersInRowVer3_run2_mustWork() {
+        // Число 0.1 подобрано таким образом, чтобы устройства 2 и 3 обязательно заразились
+        // 396 - именно столько чисел потребуется для симуляции 100 шагов
+        val simulation = Simulation(CustomProbabilityGenerator(DoubleArray(396) { 0.1 }))
+        simulation.import(File("$path/3ComputersInRowVer3.txt"))
+        simulation.run(100, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройства №1, №2 и №3 заражены
+        for (i in 1..3) {
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && !isInfected
+        }
+
+        assertFalse(isProblem)
+    }
+
+    @Test
+    fun run_3ComputersInRowVer3_run3_mustWork() {
+        // "Идеальное" заражение (за наименьшее количество ходов)
+        val simulation = Simulation(CustomProbabilityGenerator(doubleArrayOf(0.3, 0.1, 0.1, 0.1)))
+        simulation.import(File("$path/3ComputersInRowVer3.txt"))
+        simulation.run(2, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройства №1, №2 и №3 заражены
+        for (i in 1..3) {
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && !isInfected
+        }
+
         assertFalse(isProblem)
     }
 
@@ -228,24 +268,50 @@ internal class SimulationTest {
     Вероятность заражения устройства 4: 0.2
     */
     @Test
-    fun run_4ComputersVer3_mustWork() {
-        val simulation = Simulation()
+    fun run_4ComputersVer3_run1_mustWork() {
+        // Число 0.6 подобрано таким образом, чтобы устройство 2 обязательно заразилось, а устройства 3 и 4 -- нет
+        // 397 - именно столько чисел потребуется для симуляции 100 шагов
+        val simulation = Simulation(CustomProbabilityGenerator(DoubleArray(397) { 0.6 }))
         simulation.import(File("$path/4ComputersVer3.txt"))
-        simulation.run(1, 0)
+        simulation.run(100, 0)
         val virus = simulation.viruses[0]
         var isProblem = false
 
-        // Проверяем, что устройство №1 заражено
-        var isInfected = simulation.computers[0].isInfectedBy(virus)
-        isProblem = !isProblem && !isInfected
+        // Проверяем, что устройство №1 и №2 заражено
+        for (i in 1..2) {
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && !isInfected
+        }
 
         // Проверяем, что устройства №3 и №4 не заражены
         for (i in 3..4) {
-            isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
             isProblem = !isProblem && isInfected
         }
 
-        // Устройство №2 проверить нельзя, так как оно может заразиться, а может и нет
+        assertFalse(isProblem)
+    }
+
+    @Test
+    fun run_4ComputersVer3_run2_mustWork() {
+        // Число 0.3 подобрано таким образом, чтобы устройства 2 и 3 обязательно заразились, а устройство 4 -- нет
+        // 495 - именно столько чисел потребуется для симуляции 100 шагов
+        val simulation = Simulation(CustomProbabilityGenerator(DoubleArray(495) { 0.3 }))
+        simulation.import(File("$path/4ComputersVer3.txt"))
+        simulation.run(100, 0)
+        val virus = simulation.viruses[0]
+        var isProblem = false
+
+        // Проверяем, что устройство №1 и №2 заражено
+        for (i in 1..3) {
+            val isInfected = simulation.computers[i - 1].isInfectedBy(virus)
+            isProblem = !isProblem && !isInfected
+        }
+
+        // Проверяем, что устройство №4 не заражено
+        val isInfected = simulation.computers[3].isInfectedBy(virus)
+        isProblem = !isProblem && isInfected
+
         assertFalse(isProblem)
     }
 
