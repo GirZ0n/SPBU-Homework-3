@@ -1,0 +1,4 @@
+WannaCry
+1 2
+Petya
+10
