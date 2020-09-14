@@ -28,10 +28,7 @@ class Parser(file: File) {
     }
 
     fun getComputersOperatingSystem(numberOfComputers: Int): Array<OperatingSystem> {
-        val computersOSNames = Array(numberOfComputers) { "" }
-        for (i in 0 until numberOfComputers) {
-            computersOSNames[i] = scan.nextLine()
-        }
+        val computersOSNames = Array(numberOfComputers) { scan.nextLine() }
         val computersOSProbabilityOfInfection = Array(numberOfComputers) { 0.0 }
         for (i in 0 until numberOfComputers) {
             val line = scan.nextLine()
@@ -41,11 +38,9 @@ class Parser(file: File) {
             }
             computersOSProbabilityOfInfection[i] = probability
         }
-        val computersOS = Array(numberOfComputers) { OperatingSystem("", 0.0) }
-        for (i in 0 until numberOfComputers) {
-            computersOS[i] = OperatingSystem(computersOSNames[i], computersOSProbabilityOfInfection[i])
+        return Array(numberOfComputers) { i ->
+            OperatingSystem(computersOSNames[i], computersOSProbabilityOfInfection[i])
         }
-        return computersOS
     }
 
     fun getNumberOfViruses(): Int {
@@ -56,11 +51,7 @@ class Parser(file: File) {
     }
 
     fun getVirusesNames(numberOfViruses: Int): Array<String> {
-        val virusesNames = Array(numberOfViruses) { "" }
-        for (i in 0 until numberOfViruses) {
-            virusesNames[i] = scan.nextLine()
-        }
-        return virusesNames
+        return Array(numberOfViruses) { scan.nextLine() }
     }
 
     fun getInfectedComputersByViruses(numberOfViruses: Int, numberOfComputers: Int): Array<List<Int>> {
