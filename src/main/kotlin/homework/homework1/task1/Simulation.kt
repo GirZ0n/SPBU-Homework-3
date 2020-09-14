@@ -6,7 +6,7 @@ import java.lang.Exception
 import java.lang.IllegalArgumentException
 import kotlin.NoSuchElementException
 
-class Simulation {
+class Simulation(private val probabilityGenerator: ProbabilityGenerator = RandomProbabilityGenerator()) {
     val computers = mutableListOf<Computer>()
     val viruses = mutableListOf<Virus>()
     private val network = mutableMapOf<Computer, List<Computer>>()
@@ -50,7 +50,7 @@ class Simulation {
         for (virus in viruses) {
             val infectedComputers = computers.filter { computer -> computer.isInfectedBy(virus) }
             for (infectedComputer in infectedComputers) {
-                network[infectedComputer]?.forEach { computer -> computer.installVirus(virus) }
+                network[infectedComputer]?.forEach { computer -> computer.installVirus(virus, probabilityGenerator) }
             }
         }
     }
