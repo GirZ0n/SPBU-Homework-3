@@ -37,7 +37,7 @@ fun main() {
         while (frequency == -1L) {
             println("Введите частоту хода (в миллисекундах):")
             try {
-                frequency = readLine()?.toLong() ?: 0
+                frequency = readLine()?.toLong() ?: -1
             } catch (exception: NumberFormatException) {
                 println("Ожидалось число")
             }

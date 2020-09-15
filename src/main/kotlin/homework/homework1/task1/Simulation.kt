@@ -67,15 +67,15 @@ class Simulation(private val probabilityGenerator: ProbabilityGenerator = Random
         infectedComputersByViruses: Array<List<Int>>,
         computersOperatingSystem: Array<OperatingSystem>
     ) {
-        for (indexOfComputer in 1..numberOfComputers) {
+        for (indexOfComputer in 0 until numberOfComputers) {
             val listOfViruses = mutableListOf<Virus>()
-            for (indexOfVirus in 1..numberOfViruses) {
-                if (infectedComputersByViruses[indexOfVirus - 1].contains(indexOfComputer)) {
-                    listOfViruses.add(viruses[indexOfVirus - 1])
+            for (indexOfVirus in 0 until numberOfViruses) {
+                if (infectedComputersByViruses[indexOfVirus].contains(indexOfComputer + 1)) {
+                    listOfViruses.add(viruses[indexOfVirus])
                 }
             }
             computers +=
-                    Computer("Device №$indexOfComputer", computersOperatingSystem[indexOfComputer - 1], listOfViruses)
+                    Computer("Device №${indexOfComputer + 1}", computersOperatingSystem[indexOfComputer], listOfViruses)
         }
     }
 
