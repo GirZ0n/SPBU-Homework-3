@@ -115,6 +115,37 @@ internal class ParkingTest {
 
         assertEquals(numberOfParkingSpaces, numberOfSuccessfulExists.get())
     }
+
+    @RepeatedTest(100)
+    fun parking_ManyThreads_TryToEnterAndLeave_MustWork() {
+        val numberOfParkingSpaces = (0..10000).random()
+        val numberOfCars = numberOfParkingSpaces + (0..10000).random()
+        val parking = Parking(numberOfParkingSpaces)
+
+        val listOfThreads = mutableListOf<Thread>()
+        val numberOfCarsInParking = AtomicInteger(0)
+        listOfThreads.add(
+                Thread {
+                    repeat(numberOfCars) {
+                        if (parking.tryToEnter()) {
+                            numberOfCarsInParking.incrementAndGet()
+                        }
+                    }
+                })
+        listOfThreads.add(
+                Thread {
+                    repeat(numberOfCars) {
+                        if (parking.leave()) {
+                            numberOfCarsInParking.decrementAndGet()
+                        }
+                    }
+                })
+
+        listOfThreads.forEach { it.start() }
+        listOfThreads.forEach { it.join() }
+
+        assert(numberOfCarsInParking.get() in 0..numberOfParkingSpaces)
+    }
 }
 
 private fun identifyProblem(value: Boolean, expectedValue: Boolean, isProblem: Boolean): Boolean {
