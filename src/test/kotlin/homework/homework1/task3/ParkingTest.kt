@@ -7,6 +7,10 @@ import java.util.concurrent.atomic.AtomicInteger
 
 internal class ParkingTest {
 
+    private fun identifyProblem(value: Boolean, expectedValue: Boolean, isProblem: Boolean): Boolean {
+        return isProblem || value != expectedValue
+    }
+
     @Test
     fun parking_OneThread_SimpleTest_MustWork() {
         val parking = Parking(5)
@@ -146,8 +150,4 @@ internal class ParkingTest {
 
         assert(numberOfCarsInParking.get() in 0..numberOfParkingSpaces)
     }
-}
-
-private fun identifyProblem(value: Boolean, expectedValue: Boolean, isProblem: Boolean): Boolean {
-    return isProblem || value != expectedValue
 }
