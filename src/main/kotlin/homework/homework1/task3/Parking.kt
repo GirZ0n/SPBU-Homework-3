@@ -8,10 +8,7 @@ class Parking(private val numberOfParkingSpaces: Int) {
     // Обрабатываем возможный заезд машины:
     // Если есть свободные места, то запускаем машину, возвращая true,
     // иначе не пускаем машину, возвращая false
-    fun tryToEnter(): Boolean {
-        val previousValue = numberOfFreeParkingSpaces.getAndUpdate { value -> if (value > 0) value - 1 else 0 }
-        return previousValue > 0
-    }
+    fun tryToEnter() = numberOfFreeParkingSpaces.getAndUpdate { value -> if (value > 0) value - 1 else 0 } > 0
 
     // Обрабатываем выезд машины:
     // Если количество свободных мест меньше количества мест на парковке, то всё работает корректно.
