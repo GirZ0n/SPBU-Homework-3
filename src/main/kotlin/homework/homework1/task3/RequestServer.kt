@@ -1,7 +1,17 @@
 package homework.homework1.task3
 
-class RequestServer(private val parking: Parking) {
-    fun tryToEnter() = parking.tryToEnter()
+import kotlinx.coroutines.*
 
-    fun leave() = parking.leave()
+class RequestServer(private val parking: Parking) {
+    suspend fun tryToEnter(): Boolean {
+        return GlobalScope.async {
+            parking.tryToEnter()
+        }.await()
+    }
+
+    suspend fun leave(): Boolean {
+        return GlobalScope.async {
+            parking.leave()
+        }.await()
+    }
 }
