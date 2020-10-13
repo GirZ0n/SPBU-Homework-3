@@ -1,6 +1,7 @@
 package homework.homework1.task3
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class RequestServer(private val parking: Parking) {
     suspend fun tryToEnter(): Boolean {
