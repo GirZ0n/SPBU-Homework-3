@@ -30,3 +30,15 @@ d) заражения (и проверки, заразился компьюте�
 
 ### Homework №5
 [Доклад (Паттерн "Одиночка")](https://github.com/GirZ0n/SPBU-Homework-3/tree/master/src/main/resources/kotlin/homework/homework5)
+
+### Homework #6
+[Доклад (Паттерн "Фабричный метод")]
+
+### Homework #7
+[Доклад (Паттерн "Посредник")]
+
+### Homework #8
+[Доклад (Анти-паттерн "Hard coding")]
+
+### Coursework
+[Lonely Boardgamer](https://github.com/GirZ0n/LonelyBoardgamerAndroidApp)
