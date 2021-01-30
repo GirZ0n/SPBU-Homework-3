@@ -5,7 +5,7 @@ Here you can find conditions and solutions to problems for the third semester
 * [Semester №1](https://github.com/GirZ0n/SPBU-Homework-1) 
 * [Semester №2](https://github.com/GirZ0n/SPBU-Homework-2) 
 * Semester №3 :arrow_left: **You are here**
-* Semester №4
+* [Semester №4](https://github.com/GirZ0n/SPBU-Homework-4)
 
 ## Homework
 
