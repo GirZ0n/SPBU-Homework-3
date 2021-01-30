@@ -39,6 +39,8 @@ d) заражения (и проверки, заразился компьюте�
 
 Прикрепите Dockerfile к pull request. В качестве 1 слоя контейнера используйте alpine. Для определения "точки запуска" рекомендуется установить `ENTRYPOINT [/bin/bash]` и `CMD [<args>]`, где `args` — команды для запуска вашего сервера. Более подробно можно почитать, например, [тут](https://www.ctl.io/developers/blog/post/dockerfile-entrypoint-vs-cmd).
 
+[[Solution]](https://github.com/GirZ0n/SPBU-Homework-3-WebApplicationWithDocker)
+
 ### Homework №8
 [Доклад (Паттерн "Посредник")](https://github.com/GirZ0n/SPBU-Homework-3/tree/master/src/main/resources/kotlin/homework/homework8)
 
